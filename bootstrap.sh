@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/data/data/com.termux/files/usr/bin/env bash
 set -efuo pipefail
 
 if [ ! -r "~/.zshrc" ] ;
@@ -7,4 +7,4 @@ fi
 # NOTE: nerdfonts
 curl -fsSL https://raw.githubusercontent.com/arnavgr/termux-nf/main/install.sh | bash
 
-pkg install -y atuin zellij nushell ripgrep sd fd bat eza git-delta difftastic ;
+pkg install -y atuin zellij nushell ripgrep sd fd fzf bat eza git-delta difftastic ;
