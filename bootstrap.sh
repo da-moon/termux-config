@@ -7,6 +7,4 @@ fi
 # NOTE: nerdfonts
 curl -fsSL https://raw.githubusercontent.com/arnavgr/termux-nf/main/install.sh | bash
 
-pkg install -y \
-  git-delta \
-  difftastic ;
+pkg install -y atuin zellij nushell ripgrep sd fd bat eza git-delta difftastic ;
