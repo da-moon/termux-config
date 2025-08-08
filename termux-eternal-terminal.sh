@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/env bash
 
 # Sanity checks
 [ ! -d /data/data/com.termux ] && echo "Not running on Termux" && exit 1
