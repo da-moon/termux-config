@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-# FIXME: it works in zsh
-# It does not work in bash
-# When I loging as bash and run claude --version, I get the following error:
-#
-# bash: /data/data/com.termux/files/usr/bin/claude: /usr/bin/env: bad interpreter: No such file or directory
 set -efuo pipefail
 
 npm install -g @openai/codex
 npm install -g @anthropic-ai/claude-code
+bash -lic "termux-fix-shebang "$(command -v claude)" && hash -r"
+
 
 echo "Setting up MCP servers..."
 
