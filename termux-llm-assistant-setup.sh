@@ -2,11 +2,22 @@
 
 set -efuo pipefail
 
-npm install -g @openai/codex
+# npm install -g @openai/codex
+{
+INSTALL_DIR="${INSTALL_DIR:-/data/data/com.termux/files/usr/local/bin}"
+REPO="openai/codex"
+curl -sL "https://api.github.com/repos/${REPO}/releases/latest" \
+    | jq -r ".assets[] | select(.name | contains(\"$(uname -m)\") and contains(\"linux-musl\") and endswith(\".tar.gz\") and (contains(\".zst\") | not) ) | .browser_download_url" \
+    | xargs curl -sL \
+    | tar -xzOf - \
+    | tee "${INSTALL_DIR}/codex" >/dev/null \
+  && chmod +x "${INSTALL_DIR}/codex" \
+  && codex --version >/dev/null 2>&1 || {
+    echo "Failed to download codex-cli"
+  } ;
+}
 npm install -g @anthropic-ai/claude-code
 bash -lic "termux-fix-shebang "$(command -v claude)" && hash -r"
-
-
 echo "Setting up MCP servers..."
 
 claude mcp add --scope user -- context7 npx -y @upstash/context7-mcp@latest 2>/dev/null || true ;
