@@ -8,3 +8,5 @@ fi
 curl -fsSL https://raw.githubusercontent.com/arnavgr/termux-nf/main/install.sh | bash
 
 pkg install -y atuin zellij nushell ripgrep sd fd fzf bat eza git-delta difftastic ;
+
+# https://gist.github.com/CodeIter/ccdcc840e432288ef1e01cc15d66c048
