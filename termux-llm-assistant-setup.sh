@@ -6,8 +6,9 @@ set -efuo pipefail
 {
 INSTALL_DIR="${INSTALL_DIR:-/data/data/com.termux/files/usr/local/bin}"
 REPO="openai/codex"
+
 curl -sL "https://api.github.com/repos/${REPO}/releases/latest" \
-    | jq -r ".assets[] | select(.name | contains(\"$(uname -m)\") and contains(\"linux-musl\") and endswith(\".tar.gz\") and (contains(\".zst\") | not) ) | .browser_download_url" \
+    | jq -r ".assets[] | select(.name | contains(\"codex-$(uname -m)\") and contains(\"linux-musl\") and endswith(\".tar.gz\") and (contains(\".zst\") | not) ) | .browser_download_url" \
     | xargs curl -sL \
     | tar -xzOf - \
     | tee "${INSTALL_DIR}/codex" >/dev/null \
