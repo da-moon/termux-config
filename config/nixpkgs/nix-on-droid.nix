@@ -20,7 +20,6 @@
     utillinux
     tzdata
     hostname
-    # man is now managed by home-manager
     gnugrep
     gnupg
     gnused
@@ -31,11 +30,6 @@
     zip
     unzip
     openssh
-    eza
-    fzf
-    rustup
-    # Managed by home-manager (see home.nix):
-    # nixfmt-rfc-style, helix, fd, ripgrep, zellij, delta, starship, sd, zoxide
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
