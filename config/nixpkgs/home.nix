@@ -13,6 +13,9 @@
     ./programs/starship.nix
     ./programs/zoxide.nix
     ./programs/man.nix
+    ./programs/atuin.nix
+    ./programs/fzf.nix
+    ./programs/environment.nix
     ./packages.nix
   ];
 
