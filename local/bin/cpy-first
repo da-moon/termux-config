@@ -1,0 +1,19 @@
+#!/data/data/com.termux/files/usr/bin/env bash
+# cpy-first: send only the first (safe) OSC52 chunk
+# usage: some_command | cpy-first
+PAYLOAD_MAX=4096
+
+b64=$(base64 -w0)
+
+chunk=${b64:0:$PAYLOAD_MAX}
+
+if [ -n "${TMUX-}" ]; then
+  # tmux DCS passthrough
+  printf '\033Ptmux;\033\033]52;c;%s\007\033\\' "$chunk"
+elif [ -n "${STY-}" ]; then
+  # screen DCS passthrough
+  printf '\033P\033]52;c;%s\007\033\\' "$chunk"
+else
+  # direct
+  printf '\033]52;c;%s\007' "$chunk"
+fi

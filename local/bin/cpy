@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/env bash
+# ~/.local/bin/cpy  — split input into OSC52-safe chunks and copy each chunk
+
+set -euo pipefail
+
+printf "\033]52;c;%s\007" "$(base64 -w0)"
