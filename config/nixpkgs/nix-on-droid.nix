@@ -6,9 +6,7 @@
 }:
 
 {
-  # Simply install just the packages
   environment.packages = with pkgs; [
-    # User-facing stuff that you really really want to have
     vim
     git
     wget
@@ -18,11 +16,13 @@
     diffutils
     findutils
     utillinux
+    which
     tzdata
     hostname
     gnugrep
     gnupg
     gnused
+    gawk
     gnutar
     bzip2
     gzip
@@ -31,36 +31,25 @@
     unzip
     openssh
   ];
-
-  # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
-
-  # Read the changelog before changing this value
   system.stateVersion = "24.05";
-
-  # Set up nix for flakes
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
-
-  # Set default SHELL environment variable
   environment.sessionVariables = {
     SHELL = "${pkgs.bash}/bin/bash";
+    LOGDIR = "/data/data/com.termux.nix/files/usr/var/log";
+    XDG_CONFIG_HOME = "/data/data/com.termux.nix/files/home/.config";
+    XDG_CACHE_HOME = "/data/data/com.termux.nix/files/home/.cache";
+    XDG_DATA_HOME = "/data/data/com.termux.nix/files/home/.local/share";
+    XDG_STATE_HOME = "/data/data/com.termux.nix/files/home/.local/state";
+    XDG_RUNTIME_DIR = "/data/data/com.termux.nix/files/usr/tmp";
+    XDG_BIN_HOME = "/data/data/com.termux.nix/files/home/.local/bin";
   };
-
-  # Set your time zone
-  #time.timeZone = "Europe/Berlin";
-
-  # Home-manager configuration (modular setup)
-  # Configuration is organized in:
-  # - home.nix (main file with imports)
-  # - programs/*.nix (per-program configs)
-  # - packages.nix (package list)
+  time.timeZone = "America/New_York";
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-
-    # Import the modular home.nix
     config = import ./home.nix;
   };
 }
