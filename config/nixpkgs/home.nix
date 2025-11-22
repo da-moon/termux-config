@@ -17,6 +17,7 @@
     ./programs/fzf.nix
     ./programs/environment.nix
     ./packages.nix
+    ./scripts # Custom utility scripts
   ];
 
   # Home Manager state version

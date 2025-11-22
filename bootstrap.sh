@@ -1,6 +1,13 @@
 #!/data/data/com.termux/files/usr/bin/env bash
 set -efuo pipefail
 
+pkg update && pkg upgrade -y
+pkg install ca-certificates openssl-tool openssl curl -y
+# Set SSL cert path
+export SSL_CERT_FILE=$PREFIX/etc/tls/cert.pem
+echo 'export SSL_CERT_FILE=$PREFIX/etc/tls/cert.pem' >> ~/.bashrc
+
+
 if [ ! -r "~/.zshrc" ] ;
   curl -fsSL https://git.io/termux | bash -s -- --zsh --python --neovim ;
 fi

@@ -17,6 +17,7 @@
     findutils
     utillinux
     which
+    ncurses
     tzdata
     hostname
     gnugrep

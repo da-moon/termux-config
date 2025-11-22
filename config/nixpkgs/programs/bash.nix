@@ -38,7 +38,11 @@ in
       # Starship is already initialized by home-manager's programs.starship module
       # Zoxide is already initialized by home-manager's programs.zoxide module
 
-      # fzf-tab-completion: Enable fzf for tab completion
+      # fzf-tab-completion: Configure auto-completion behavior
+      # Auto-complete common prefix before showing fzf (prevents UI flicker)
+      export FZF_COMPLETION_AUTO_COMMON_PREFIX=true
+      export FZF_COMPLETION_AUTO_COMMON_PREFIX_PART=true
+
       # Source the bash completion script
       source "${fzf-tab-completion}/share/fzf-tab-completion/bash/fzf-bash-completion.sh"
 
