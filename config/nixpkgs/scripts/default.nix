@@ -7,6 +7,9 @@
     # Clipboard utility - copy stdin to clipboard via OSC 52
     (import ./cpy.nix { inherit pkgs; })
 
+    # Smart rm wrapper - uses trash when possible, real rm for cross-volume
+    (import ./safe-rm.nix { inherit pkgs; })
+
     # Add more scripts here as you create them:
     # (import ./another-script.nix { inherit pkgs; })
   ];

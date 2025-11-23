@@ -30,8 +30,8 @@ in
       # Zoxide (smart cd) alias
       cd = "z";
 
-      # Trash (safe rm) alias
-      rm = "trash-put"; # Move files to trash instead of permanent deletion
+      # Smart rm alias - uses trash when possible, real rm for cross-volume
+      rm = "safe-rm";
     };
 
     initExtra = ''
