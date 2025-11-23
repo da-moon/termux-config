@@ -6,8 +6,10 @@
 }:
 
 let
-  # Import fzf-tab-completion from local flake
-  fzfTabCompletionFlake = builtins.getFlake "/data/data/com.termux.nix/files/home/.config/nixpkgs/fzf-tab-completion";
+  # Import fzf-tab-completion from local flake using absolute real path to avoid symlink issues
+  # Note: sync/ is a symlink to /storage/emulated/0/sync/
+  realConfigDir = "/storage/emulated/0/sync/github/termux-config/config/nixpkgs";
+  fzfTabCompletionFlake = builtins.getFlake "${realConfigDir}/fzf-tab-completion";
   fzf-tab-completion = fzfTabCompletionFlake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
