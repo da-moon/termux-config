@@ -30,8 +30,6 @@ in
       # Zoxide (smart cd) alias
       cd = "z";
 
-      # Smart rm alias - uses trash when possible, real rm for cross-volume
-      rm = "safe-rm";
     };
 
     initExtra = ''

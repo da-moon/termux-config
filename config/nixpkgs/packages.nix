@@ -28,7 +28,7 @@
       uv # Fast Python package installer and resolver
 
       # Editor
-      helix # Modal text editor
+      # helix - now managed via programs.helix in programs/helix.nix
 
       # Search tools
       ripgrep # Fast recursive search (rg)

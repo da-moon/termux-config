@@ -15,6 +15,7 @@
     ./programs/man.nix
     ./programs/atuin.nix
     ./programs/fzf.nix
+    ./programs/helix.nix
     ./programs/environment.nix
     ./packages.nix
     ./scripts # Custom utility scripts
