@@ -8,7 +8,7 @@
 let
   # Import fzf-tab-completion from local flake
   fzfTabCompletionFlake = builtins.getFlake "/data/data/com.termux.nix/files/home/.config/nixpkgs/fzf-tab-completion";
-  fzf-tab-completion = fzfTabCompletionFlake.packages.${pkgs.system}.default;
+  fzf-tab-completion = fzfTabCompletionFlake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   programs.bash = {

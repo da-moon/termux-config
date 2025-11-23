@@ -9,21 +9,24 @@
   programs.git = {
     enable = true;
 
-    # Basic configuration
-    userName = "da-moon";
-    userEmail = "contact@havi.dev"; 
+    # All git configuration now goes in settings (new format in unstable)
+    settings = {
+      # User configuration
+      user = {
+        name = "da-moon";
+        email = "contact@havi.dev";
+      };
 
-    # Git aliases
-    aliases = {
-      st = "status";
-      co = "checkout";
-      br = "branch";
-      ci = "commit";
-      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-    };
+      # Git aliases
+      alias = {
+        st = "status";
+        co = "checkout";
+        br = "branch";
+        ci = "commit";
+        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      };
 
-    # Extra git configuration
-    extraConfig = {
+      # General git configuration
       init.defaultBranch = "main";
       pull.rebase = false;
       core.editor = "hx"; # Use helix as default editor

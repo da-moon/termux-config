@@ -21,9 +21,9 @@
       marksman
       nodePackages.vscode-json-languageserver
       yaml-language-server
-      ansible-language-server
+      # ansible-language-server - removed from nixpkgs (unmaintained)
       nodePackages.bash-language-server
-      python311Packages.python-lsp-server
+      pyright
       nodePackages.vscode-langservers-extracted # provides html, css, json, eslint LSPs
       nodePackages.typescript-language-server
       terraform-ls
@@ -462,7 +462,7 @@
             ];
           };
           auto-format = true;
-          language-servers = [ "marksman" "gpt" ];
+          language-servers = [ "marksman" ];
         }
         {
           name = "json";
@@ -478,7 +478,6 @@
           auto-format = true;
           language-servers = [
             "vscode-json-language-server"
-            "gpt"
           ];
         }
         {
@@ -494,8 +493,7 @@
           auto-format = true;
           language-servers = [
             "yaml-language-server"
-            "ansible-language-server"
-            "gpt"
+            # "ansible-language-server" - removed (unmaintained)
           ];
         }
         {
@@ -512,7 +510,6 @@
             ];
           };
           auto-format = true;
-          language-servers = [ "gpt" ];
         }
         {
           name = "graphql";
@@ -527,7 +524,6 @@
           auto-format = true;
           language-servers = [
             "graphql-language-service"
-            "gpt"
           ];
         }
         {
@@ -547,7 +543,6 @@
           auto-format = true;
           language-servers = [
             "bash-language-server"
-            "gpt"
           ];
         }
         {
@@ -561,8 +556,7 @@
           };
           auto-format = true;
           language-servers = [
-            "pylsp"
-            "gpt"
+            "pyright"
           ];
         }
         {
@@ -579,7 +573,6 @@
           auto-format = true;
           language-servers = [
             "vscode-html-language-server"
-            "gpt"
           ];
         }
         {
@@ -596,7 +589,6 @@
           auto-format = true;
           language-servers = [
             "vscode-css-language-server"
-            "gpt"
           ];
         }
         {
@@ -613,7 +605,6 @@
           auto-format = true;
           language-servers = [
             "typescript-language-server"
-            "gpt"
           ];
         }
         {
@@ -630,7 +621,6 @@
           auto-format = true;
           language-servers = [
             "typescript-language-server"
-            "gpt"
           ];
         }
         {
@@ -648,35 +638,30 @@
           auto-format = true;
           language-servers = [
             "typescript-language-server"
-            "gpt"
           ];
         }
         {
           name = "awk";
           language-servers = [
             "awk-language-server"
-            "gpt"
           ];
         }
         {
           name = "hcl";
           language-servers = [
             "terraform-ls"
-            "gpt"
           ];
         }
         {
           name = "tfvars";
           language-servers = [
             "terraform-ls"
-            "gpt"
           ];
         }
         {
           name = "cmake";
           language-servers = [
             "cmake-language-server"
-            "gpt"
           ];
         }
         {
@@ -687,7 +672,6 @@
           name = "toml";
           language-servers = [
             "taplo"
-            "gpt"
           ];
         }
         {
@@ -695,7 +679,6 @@
           language-servers = [
             "bufls"
             "pbkit"
-            "gpt"
           ];
         }
         {
@@ -703,14 +686,12 @@
           language-servers = [
             "gopls"
             "golangci-lint-lsp"
-            "gpt"
           ];
         }
         {
           name = "gotmpl";
           language-servers = [
             "gopls"
-            "gpt"
           ];
         }
         {

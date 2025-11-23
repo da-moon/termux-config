@@ -5,7 +5,20 @@
   ...
 }:
 
+let
+  # Fetch nixpkgs-unstable for latest packages
+  # This ensures we get the latest Helix and other packages
+  pkgs-unstable = import (fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+    # Optional: pin to specific commit for reproducibility
+    # url = "https://github.com/NixOS/nixpkgs/archive/<commit-hash>.tar.gz";
+  }) { };
+in
 {
+  # Note: Using nixpkgs-unstable channel
+  # Run: nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
+  #      nix-channel --update
+
   environment.packages = with pkgs; [
     vim
     git
@@ -15,7 +28,7 @@
     killall
     diffutils
     findutils
-    utillinux
+    util-linux
     which
     ncurses
     tzdata

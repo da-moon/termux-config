@@ -14,7 +14,7 @@
     with pkgs;
     [
       # Claude Code from local flake
-      claudeCodeFlake.packages.${pkgs.system}.default
+      claudeCodeFlake.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # Development tools
       sd # Modern sed alternative
