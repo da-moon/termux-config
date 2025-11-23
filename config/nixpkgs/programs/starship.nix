@@ -8,6 +8,12 @@
 {
   programs.starship = {
     enable = true;
+
+    # Override starship package to skip failing tests in nixpkgs-unstable
+    package = pkgs.starship.overrideAttrs (oldAttrs: {
+      doCheck = false;  # Skip git_metrics tests that fail in sandbox
+    });
+
     settings = {
       # Add a newline before the prompt
       add_newline = true;
