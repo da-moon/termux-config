@@ -6,11 +6,20 @@
 }:
 
 let
-  # Import fzf-tab-completion from local flake using absolute real path to avoid symlink issues
-  # Note: sync/ is a symlink to /storage/emulated/0/sync/
-  realConfigDir = "/storage/emulated/0/sync/github/termux-config/config/nixpkgs";
-  fzfTabCompletionFlake = builtins.getFlake "${realConfigDir}/fzf-tab-completion";
-  fzf-tab-completion = fzfTabCompletionFlake.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  # Import fzf-tab-completion from local flake in git repository
+  # Uses environment variables for portability (see packages.nix for details)
+  system = pkgs.stdenv.hostPlatform.system;
+
+  gitRepoEnv = builtins.getEnv "GIT_REPO_ROOT";
+  configSubdirEnv = builtins.getEnv "CONFIG_SUBDIR";
+
+  gitRepoRoot =
+    if gitRepoEnv != "" then gitRepoEnv else "/storage/emulated/0/sync/github/termux-config";
+  configSubdir = if configSubdirEnv != "" then configSubdirEnv else "config/nixpkgs";
+
+  fzfTabCompletionFlake =
+    builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/fzf-tab-completion";
+  fzf-tab-completion = fzfTabCompletionFlake.packages.${system}.default;
 in
 {
   programs.bash = {

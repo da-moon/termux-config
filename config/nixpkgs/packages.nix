@@ -8,15 +8,31 @@
 {
   home.packages =
     let
-      # Import the claude-code flake using absolute real path to avoid symlink issues
-      # Note: sync/ is a symlink to /storage/emulated/0/sync/
-      realConfigDir = "/storage/emulated/0/sync/github/termux-config/config/nixpkgs";
-      claudeCodeFlake = builtins.getFlake "${realConfigDir}/claude-code";
+      system = pkgs.stdenv.hostPlatform.system;
+
+      # For portability: Set these environment variables to point to your setup
+      # GIT_REPO_ROOT: The root of your git repository (default for nix-on-droid shown below)
+      # CONFIG_SUBDIR: Subdirectory path from repo root to nixpkgs config
+      gitRepoEnv = builtins.getEnv "GIT_REPO_ROOT";
+      configSubdirEnv = builtins.getEnv "CONFIG_SUBDIR";
+
+      gitRepoRoot =
+        if gitRepoEnv != "" then gitRepoEnv else "/storage/emulated/0/sync/github/termux-config";
+      configSubdir =
+        if configSubdirEnv != "" then configSubdirEnv else "config/nixpkgs";
+
+      # Import custom flakes from subdirectories in the git repo using ?dir= parameter
+      claudeCodeFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/claude-code";
+      gooseCliFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/goose-cli";
+      fzfTabCompletionFlake =
+        builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/fzf-tab-completion";
     in
     with pkgs;
     [
-      # Claude Code from local flake
-      claudeCodeFlake.packages.${pkgs.stdenv.hostPlatform.system}.default
+      # Custom packages from local flakes
+      claudeCodeFlake.packages.${system}.default
+      gooseCliFlake.packages.${system}.default
+      fzfTabCompletionFlake.packages.${system}.default
 
       # ps wrapper to suppress Android boot time errors
       (pkgs.writeShellScriptBin "ps" ''
