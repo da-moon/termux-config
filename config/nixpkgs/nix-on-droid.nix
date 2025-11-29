@@ -23,6 +23,7 @@ in
     vim
     git
     wget
+    curl
     jq
     procps
     killall
