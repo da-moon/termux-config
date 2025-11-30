@@ -50,9 +50,6 @@
       bun # Fast JavaScript runtime and toolkit
       uv # Fast Python package installer and resolver
 
-      # Editor
-      # helix - now managed via programs.helix in programs/helix.nix
-
       # Search tools
       ripgrep # Fast recursive search (rg)
       fd # Fast file finder
@@ -68,5 +65,6 @@
       # utilities
       fzf # fuzzy finder
       eternal-terminal # Mosh alternative
+      gh # github cli
     ];
 }
