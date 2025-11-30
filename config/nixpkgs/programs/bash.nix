@@ -44,8 +44,8 @@ in
     };
 
     initExtra = ''
-      # Starship is already initialized by home-manager's programs.starship module
-      # Zoxide is already initialized by home-manager's programs.zoxide module
+      # Load secrets from external file (not tracked in git)
+      [ -f ~/.secrets.env ] && source ~/.secrets.env
 
       # fzf-tab-completion: Configure auto-completion behavior
       # Auto-complete common prefix before showing fzf (prevents UI flicker)

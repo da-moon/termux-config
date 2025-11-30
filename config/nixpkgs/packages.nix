@@ -26,6 +26,9 @@
       gooseCliFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/goose-cli";
       fzfTabCompletionFlake =
         builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/fzf-tab-completion";
+
+      # MCP Servers - imported from central file
+      mcpServers = import ./mcp-servers { inherit gitRepoRoot configSubdir system; };
     in
     with pkgs;
     [
@@ -33,6 +36,9 @@
       claudeCodeFlake.packages.${system}.default
       gooseCliFlake.packages.${system}.default
       fzfTabCompletionFlake.packages.${system}.default
+    ]
+    ++ mcpServers
+    ++ [
 
       # ps wrapper to suppress Android boot time errors
       (pkgs.writeShellScriptBin "ps" ''
