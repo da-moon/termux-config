@@ -209,3 +209,7 @@
       }
     );
 }
+# NOTE: Minimal way to install it
+# nix registry add personal/claude-code github:da-moon/termux-config?dir=config/nixpkgs/claude-code
+# nix profile install personal/claude-code#claude-cod
+
