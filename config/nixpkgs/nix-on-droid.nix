@@ -45,6 +45,7 @@ in
     zip
     unzip
     openssh
+    file
   ];
   environment.etcBackupExtension = ".bak";
   system.stateVersion = "24.05";

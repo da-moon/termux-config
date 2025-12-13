@@ -1,41 +1,93 @@
 {
-  description = "OpenAI Codex CLI tool";
+  description = "OpenAI Codex CLI - AI coding assistant";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
-    { self, nixpkgs }:
-    let
-      system = "aarch64-linux"; # For Android
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
     {
-      packages.${system}.default = pkgs.stdenv.mkDerivation rec {
-        pname = "codex";
-        version = "0.57.0";
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        version = "0.72.0";
 
-        src = pkgs.fetchurl {
-
-          # "https://github.com/openai/codex/releases/download/rust-v0.57.0/codex-x86_64-unknown-linux-musl.tar.gz"
-          url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-${pkgs.stdenv.hostPlatform.uname.processor}-unknown-linux-musl.tar.gz";
-          sha256 = "sha256-mHZg694PXNwIPVLSGKiUg3+rSYukK4DSLvciTH4BIpY=";
+        # Architecture-specific configuration
+        archConfig = {
+          "aarch64-linux" = {
+            arch = "aarch64";
+            sha256 = "sha256-HKGdAFhkgZLzkObeybYk49XDIBflWkwI1oqVrbWelHU=";
+          };
+          "x86_64-linux" = {
+            arch = "x86_64";
+            sha256 = "sha256-Qi4D9aXMGjuHc0qlfp1CUBwzRHld9L4t3fmf8f/95xw=";
+          };
         };
 
-        sourceRoot = ".";
+        # Get config for current system, fallback to x86_64 if unknown
+        currentArch = archConfig.${system} or archConfig."x86_64-linux";
 
-        installPhase = ''
-          runHook preInstall
-          install -m755 -D codex-${pkgs.stdenv.hostPlatform.uname.processor}-unknown-linux-musl $out/bin/codex
-          runHook postInstall
-        '';
+        codex = pkgs.stdenv.mkDerivation rec {
+          pname = "codex";
+          inherit version;
 
-        meta = with pkgs.lib; {
-          description = "OpenAI Codex CLI tool";
-          homepage = "https://github.com/openai/codex";
-          platforms = platforms.linux;
+          src = pkgs.fetchurl {
+            url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-${currentArch.arch}-unknown-linux-musl.tar.gz";
+            sha256 = currentArch.sha256;
+          };
+
+          sourceRoot = ".";
+
+          # No build needed - precompiled binary
+          dontBuild = true;
+          dontConfigure = true;
+
+          installPhase = ''
+            runHook preInstall
+            install -m755 -D codex-${currentArch.arch}-unknown-linux-musl $out/bin/codex
+            runHook postInstall
+          '';
+
+          # Don't try to patch static musl binary
+          dontStrip = true;
+          dontPatchELF = true;
+
+          meta = with pkgs.lib; {
+            description = "OpenAI Codex CLI - AI coding assistant for terminal";
+            longDescription = ''
+              Codex is a lightweight coding agent that runs in your terminal.
+              It can read and modify files, execute commands, search the web,
+              and help you with various coding tasks through natural language.
+            '';
+            homepage = "https://github.com/openai/codex";
+            platforms = [ "aarch64-linux" "x86_64-linux" ];
+            maintainers = [ ];
+          };
         };
-      };
-    };
+
+      in
+      {
+        packages = {
+          default = codex;
+          codex = codex;
+        };
+
+        apps = {
+          default = {
+            type = "app";
+            program = "${codex}/bin/codex";
+          };
+          codex = {
+            type = "app";
+            program = "${codex}/bin/codex";
+          };
+        };
+      }
+    );
 }

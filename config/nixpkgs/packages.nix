@@ -26,6 +26,7 @@
       gooseCliFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/goose-cli";
       fzfTabCompletionFlake =
         builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/fzf-tab-completion";
+      beadsFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/beads";
 
       # MCP Servers - imported from central file
       mcpServers = import ./mcp-servers { inherit gitRepoRoot configSubdir system; };
@@ -36,6 +37,7 @@
       claudeCodeFlake.packages.${system}.default
       gooseCliFlake.packages.${system}.default
       fzfTabCompletionFlake.packages.${system}.default
+      beadsFlake.packages.${system}.default
     ]
     ++ mcpServers
     ++ [
