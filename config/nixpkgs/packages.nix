@@ -10,26 +10,14 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
 
-      # For portability: Set these environment variables to point to your setup
-      # GIT_REPO_ROOT: The root of your git repository (default for nix-on-droid shown below)
-      # CONFIG_SUBDIR: Subdirectory path from repo root to nixpkgs config
-      gitRepoEnv = builtins.getEnv "GIT_REPO_ROOT";
-      configSubdirEnv = builtins.getEnv "CONFIG_SUBDIR";
+      # Import custom flakes from GitHub
+      claudeCodeFlake = builtins.getFlake "github:da-moon/flakes?dir=claude-code";
+      gooseCliFlake = builtins.getFlake "github:da-moon/flakes?dir=goose-cli";
+      fzfTabCompletionFlake = builtins.getFlake "github:da-moon/flakes?dir=fzf-tab-completion";
+      beadsFlake = builtins.getFlake "github:da-moon/flakes?dir=beads";
 
-      gitRepoRoot =
-        if gitRepoEnv != "" then gitRepoEnv else "/storage/emulated/0/sync/github/termux-config";
-      configSubdir =
-        if configSubdirEnv != "" then configSubdirEnv else "config/nixpkgs";
-
-      # Import custom flakes from subdirectories in the git repo using ?dir= parameter
-      claudeCodeFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/claude-code";
-      gooseCliFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/goose-cli";
-      fzfTabCompletionFlake =
-        builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/fzf-tab-completion";
-      beadsFlake = builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/beads";
-
-      # MCP Servers - imported from central file
-      mcpServers = import ./mcp-servers { inherit gitRepoRoot configSubdir system; };
+      # MCP Servers - imported from programs
+      mcpServers = import ./programs/mcp-servers.nix { inherit system; };
     in
     with pkgs;
     [

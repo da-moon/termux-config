@@ -6,19 +6,9 @@
 }:
 
 let
-  # Import fzf-tab-completion from local flake in git repository
-  # Uses environment variables for portability (see packages.nix for details)
+  # Import fzf-tab-completion from GitHub flakes repo
   system = pkgs.stdenv.hostPlatform.system;
-
-  gitRepoEnv = builtins.getEnv "GIT_REPO_ROOT";
-  configSubdirEnv = builtins.getEnv "CONFIG_SUBDIR";
-
-  gitRepoRoot =
-    if gitRepoEnv != "" then gitRepoEnv else "/storage/emulated/0/sync/github/termux-config";
-  configSubdir = if configSubdirEnv != "" then configSubdirEnv else "config/nixpkgs";
-
-  fzfTabCompletionFlake =
-    builtins.getFlake "git+file://${gitRepoRoot}?dir=${configSubdir}/fzf-tab-completion";
+  fzfTabCompletionFlake = builtins.getFlake "github:da-moon/flakes?dir=fzf-tab-completion";
   fzf-tab-completion = fzfTabCompletionFlake.packages.${system}.default;
 in
 {
