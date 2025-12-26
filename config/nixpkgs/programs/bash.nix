@@ -31,6 +31,8 @@ in
       # Zoxide (smart cd) alias
       cd = "z";
 
+      # Nix-on-droid switch with fresh flake fetch
+      nod-switch = "nix-on-droid switch --option tarball-ttl 0";
     };
 
     initExtra = ''

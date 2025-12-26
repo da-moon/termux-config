@@ -70,4 +70,7 @@ in
   };
 }
 
+# NOTE: update system with
+# nix-on-droid switch --option tarball-ttl 0
+
 # vim: ft=nix
