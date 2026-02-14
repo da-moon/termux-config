@@ -33,11 +33,16 @@ in
 
       # Nix-on-droid switch with fresh flake fetch
       nod-switch = "nix-on-droid switch --option tarball-ttl 0";
+
+      # Use system bash-interactive to skip slow bashInteractive evaluation
+      # --command bash would use the minimal nix bash (no readline/completion)
+      nix-develop = "nix develop --command ${pkgs.bashInteractive}/bin/bash";
     };
 
     initExtra = ''
       # Load secrets from external file (not tracked in git)
       [ -f ~/.secrets.env ] && source ~/.secrets.env
+
 
       # fzf-tab-completion: Configure auto-completion behavior
       # Auto-complete common prefix before showing fzf (prevents UI flicker)

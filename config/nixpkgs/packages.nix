@@ -12,7 +12,8 @@
 
       # Import custom flakes from GitHub
       claudeCodeFlake = builtins.getFlake "github:da-moon/flakes?dir=claude-code";
-      gooseCliFlake = builtins.getFlake "github:da-moon/flakes?dir=goose-cli";
+      # geminiCliFlake = builtins.getFlake "github:da-moon/flakes?dir=gemini-cli";
+      # gooseCliFlake = builtins.getFlake "github:da-moon/flakes?dir=goose-cli";
       fzfTabCompletionFlake = builtins.getFlake "github:da-moon/flakes?dir=fzf-tab-completion";
       beadsFlake = builtins.getFlake "github:da-moon/flakes?dir=beads";
 
@@ -23,7 +24,8 @@
     [
       # Custom packages from local flakes
       claudeCodeFlake.packages.${system}.default
-      gooseCliFlake.packages.${system}.default
+      # geminiCliFlake.packages.${system}.default
+      # gooseCliFlake.packages.${system}.default
       fzfTabCompletionFlake.packages.${system}.default
       beadsFlake.packages.${system}.default
     ]
