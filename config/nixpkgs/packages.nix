@@ -12,8 +12,11 @@
 
       # Import custom flakes from GitHub
       claudeCodeFlake = builtins.getFlake "github:da-moon/flakes?dir=claude-code";
+      kimiCliFlake = builtins.getFlake "github:da-moon/flakes?dir=kimi-cli";
+
       # geminiCliFlake = builtins.getFlake "github:da-moon/flakes?dir=gemini-cli";
       # gooseCliFlake = builtins.getFlake "github:da-moon/flakes?dir=goose-cli";
+
       fzfTabCompletionFlake = builtins.getFlake "github:da-moon/flakes?dir=fzf-tab-completion";
       beadsFlake = builtins.getFlake "github:da-moon/flakes?dir=beads";
 
@@ -24,6 +27,7 @@
     [
       # Custom packages from local flakes
       claudeCodeFlake.packages.${system}.default
+      kimiCliFlake.packages.${system}.default
       # geminiCliFlake.packages.${system}.default
       # gooseCliFlake.packages.${system}.default
       fzfTabCompletionFlake.packages.${system}.default
@@ -35,6 +39,11 @@
       # ps wrapper to suppress Android boot time errors
       (pkgs.writeShellScriptBin "ps" ''
         ${pkgs.procps}/bin/ps "$@" 2> >(${pkgs.gnugrep}/bin/grep -v "Unable to get system boot time" >&2)
+      '')
+
+      # stty wrapper to suppress Android PTY permission errors in devshells
+      (pkgs.writeShellScriptBin "stty" ''
+        ${pkgs.coreutils}/bin/stty "$@" 2> >(${pkgs.gnugrep}/bin/grep -v "Permission denied" >&2)
       '')
 
       # Development tools

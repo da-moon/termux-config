@@ -31,30 +31,37 @@ claude mcp add --scope user -- sequential-thinking npx -y @modelcontextprotocol/
 claude mcp add --scope user -- perplexity-ask npx -y server-perplexity-ask 2>/dev/null || true
 claude mcp add --scope user -- exa npx -y exa-mcp-server --tools=web_search_exa,github_search,crawling 2>/dev/null || true
 claude mcp add --scope user -- firecrawl npx -y firecrawl-mcp 2>/dev/null || true
-claude mcp add --scope user -- gitlab-mcp-doc uvx --from mcpdoc mcpdoc \
-  --urls \
-  GitLabAdmin:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/administration.txt \
-  GitLabAPI:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/api.txt \
-  GitLabArchitecture:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/architecture.txt \
-  GitLabCI:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/ci.txt \
-  GitLabCloudSeed:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/cloud_seed.txt \
-  GitLabDowngrade:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/downgrade_ee_to_ce.txt \
-  GitLabDrawers:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/drawers.txt \
-  GitLabEditorExtensions:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/editor_extensions.txt \
-  GitLabInstall:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/install.txt \
-  GitLabIntegration:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/integration.txt \
-  GitLabOperations:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/operations.txt \
-  GitLabPolicy:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/policy.txt \
-  GitLabRaketasks:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/raketasks.txt \
-  GitLabSecurity:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/security.txt \
-  GitLabSolutions:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/solutions.txt \
-  GitLabSubscriptions:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/subscriptions.txt \
-  GitLabTopics:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/topics.txt \
-  GitLabTutorials:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/tutorials.txt \
-  GitLabUpdate:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/update.txt \
-  GitLabUser:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/user.txt \
-  --allowed-domains '*' \
-  --transport stdio 2>/dev/null || true
+claude mcp add --transport http "parallel-search" "https://search-mcp.parallel.ai/mcp" --header "Authorization: Bearer ${PARALLEL_API_KEY}"
+claude mcp add --transport http "parallel-task" "https://task-mcp.parallel.ai/mcp" --header "Authorization: Bearer ${PARALLEL_API_KEY}"
+
+codex mcp add parallel-search --url "https://search-mcp.parallel.ai/mcp" --bearer-token-env-var PARALLEL_API_KEY
+codex mcp add parallel-task --url "https://task-mcp.parallel.ai/mcp" --bearer-token-env-var PARALLEL_API_KEY
+
+# claude mcp add --scope user -- gitlab-mcp-doc uvx --from mcpdoc mcpdoc \
+#   --urls \
+#   GitLabAdmin:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/administration.txt \
+#   GitLabAPI:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/api.txt \
+#   GitLabArchitecture:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/architecture.txt \
+#   GitLabCI:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/ci.txt \
+#   GitLabCloudSeed:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/cloud_seed.txt \
+#   GitLabDowngrade:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/downgrade_ee_to_ce.txt \
+#   GitLabDrawers:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/drawers.txt \
+#   GitLabEditorExtensions:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/editor_extensions.txt \
+#   GitLabInstall:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/install.txt \
+#   GitLabIntegration:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/integration.txt \
+#   GitLabOperations:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/operations.txt \
+#   GitLabPolicy:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/policy.txt \
+#   GitLabRaketasks:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/raketasks.txt \
+#   GitLabSecurity:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/security.txt \
+#   GitLabSolutions:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/solutions.txt \
+#   GitLabSubscriptions:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/subscriptions.txt \
+#   GitLabTopics:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/topics.txt \
+#   GitLabTutorials:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/tutorials.txt \
+#   GitLabUpdate:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/update.txt \
+#   GitLabUser:https://raw.githubusercontent.com/da-moon/llms.txt/refs/heads/master/gitlab/user.txt \
+#   --allowed-domains '*' \
+#   --transport stdio 2>/dev/null || true
+
 # NOTE: need to manually install npm MCP servers and fix shebang
 
 npm install -g @upstash/context7-mcp@latest
