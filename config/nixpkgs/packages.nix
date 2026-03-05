@@ -74,5 +74,6 @@
       fzf # fuzzy finder
       eternal-terminal # Mosh alternative
       gh # github cli
+      syncthing # File synchronization
     ];
 }

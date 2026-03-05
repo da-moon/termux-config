@@ -34,6 +34,9 @@ in
       # Nix-on-droid switch with fresh flake fetch
       nod-switch = "nix-on-droid switch --option tarball-ttl 0";
 
+      # Syncthing log viewer
+      syncthing-log = "tail -f $LOGDIR/syncthing.log";
+
       # Use system bash-interactive to skip slow bashInteractive evaluation
       # --command bash would use the minimal nix bash (no readline/completion)
       nix-develop = "nix develop --command ${pkgs.bashInteractive}/bin/bash";
@@ -42,6 +45,13 @@ in
     initExtra = ''
       # Load secrets from external file (not tracked in git)
       [ -f ~/.secrets.env ] && source ~/.secrets.env
+
+      # Autostart syncthing if not already running
+      if ! pgrep -x syncthing > /dev/null 2>&1; then
+        mkdir -p "$LOGDIR"
+        nohup syncthing serve --no-browser > "$LOGDIR/syncthing.log" 2>&1 &
+        disown
+      fi
 
 
       # fzf-tab-completion: Configure auto-completion behavior
