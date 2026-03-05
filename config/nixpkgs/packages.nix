@@ -56,6 +56,7 @@
       deno # Secure JavaScript/TypeScript runtime
       bun # Fast JavaScript runtime and toolkit
       uv # Fast Python package installer and resolver
+      python3 # Python interpreter
 
       # Search tools
       ripgrep # Fast recursive search (rg)

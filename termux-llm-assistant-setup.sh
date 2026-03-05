@@ -31,8 +31,8 @@ claude mcp add --scope user -- sequential-thinking npx -y @modelcontextprotocol/
 claude mcp add --scope user -- perplexity-ask npx -y server-perplexity-ask 2>/dev/null || true
 claude mcp add --scope user -- exa npx -y exa-mcp-server --tools=web_search_exa,github_search,crawling 2>/dev/null || true
 claude mcp add --scope user -- firecrawl npx -y firecrawl-mcp 2>/dev/null || true
-claude mcp add --transport http "parallel-search" "https://search-mcp.parallel.ai/mcp" --header "Authorization: Bearer ${PARALLEL_API_KEY}"
-claude mcp add --transport http "parallel-task" "https://task-mcp.parallel.ai/mcp" --header "Authorization: Bearer ${PARALLEL_API_KEY}"
+claude mcp add --scope user --transport http "parallel-search" "https://search-mcp.parallel.ai/mcp" --header "Authorization: Bearer ${PARALLEL_API_KEY}"
+claude mcp add --scope user --transport http "parallel-task" "https://task-mcp.parallel.ai/mcp" --header "Authorization: Bearer ${PARALLEL_API_KEY}"
 
 codex mcp add parallel-search --url "https://search-mcp.parallel.ai/mcp" --bearer-token-env-var PARALLEL_API_KEY
 codex mcp add parallel-task --url "https://task-mcp.parallel.ai/mcp" --bearer-token-env-var PARALLEL_API_KEY
