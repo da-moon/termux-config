@@ -51,6 +51,7 @@ in
   system.stateVersion = "24.05";
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    download-buffer-size = 268435456
   '';
   environment.sessionVariables = {
     SHELL = "${pkgs.bash}/bin/bash";
