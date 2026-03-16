@@ -37,12 +37,12 @@ in
       # Syncthing log viewer
       syncthing-log = "tail -f $LOGDIR/syncthing.log";
 
-      # Use system bash-interactive to skip slow bashInteractive evaluation
-      # --command bash would use the minimal nix bash (no readline/completion)
-      nix-develop = "nix develop --command ${pkgs.bashInteractive}/bin/bash";
     };
 
     initExtra = ''
+      # Use system bash-interactive to skip slow bashInteractive evaluation
+      nix-develop() { nix develop "$@" --command ${pkgs.bashInteractive}/bin/bash; }
+
       # Load secrets from external file (not tracked in git)
       [ -f ~/.secrets.env ] && source ~/.secrets.env
 
