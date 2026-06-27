@@ -9,7 +9,7 @@ echo 'export SSL_CERT_FILE=$PREFIX/etc/tls/cert.pem' >> ~/.bashrc
 
 
 if [ ! -r "~/.zshrc" ] ;
-  curl -fsSL https://git.io/termux | bash -s -- --zsh --python --neovim ;
+  curl -fsSL https://git.io/termux | sed -e 's/--quiet//g' -e 's/git:/https:/g' | bash -s -- --zsh --python --neovim ;
 fi
 # NOTE: nerdfonts
 curl -fsSL https://raw.githubusercontent.com/arnavgr/termux-nf/main/install.sh | bash
