@@ -23,6 +23,9 @@ curl -fsSL "https://github.com/block/goose/releases/download/stable/download_cli
 # Install Claude Code
 # npm install -g @anthropic-ai/claude-code
 # bash -lic "termux-fix-shebang "$(command -v claude)" && hash -r"
+
+curl -fsSL https://raw.githubusercontent.com/gtbuchanan/claude-code-termux/main/install.sh | bash
+
 echo "Setting up MCP servers..."
 
 claude mcp add --scope user -- context7 npx -y @upstash/context7-mcp@latest 2>/dev/null || true
